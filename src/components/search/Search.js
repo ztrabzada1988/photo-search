@@ -4,6 +4,8 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
 
+import ImageResults from '../image-results/ImageResults';
+
 class Search extends Component {
     state = {
         searchText: '',
@@ -14,13 +16,24 @@ class Search extends Component {
 
     //names and values correspond to TextField below
     onTextChange = (e) => {
-        this.setState({[e.target.name]: e.target.value}, // see TextField name below
-        () => {
-            axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}`)
+        const val = e.target.value;
+        this.setState({[e.target.name]: val}, () => {  // see TextField name below
+            if (val === '') {
+                this.setState({images: []});
+            } else {
+                axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&
+                image_type=photo&per_page=${this.state.amount}&safesearch=true`) // see pixabay API documentation for API call terms 
+                    .then(res => this.setState({images: res.data.hits})) // the response data is on "hits" object in the API response (see API docu)
+                    .catch(err => console.log(err));
+            }
         });
     };
 
+    // this corresponds to the SelectField below
+    onAmountChange = (e, index, value) => this.setState({amount: value});
+
   render() {
+    console.log(this.state.images);
     return (
       <div>
         <TextField 
@@ -45,6 +58,8 @@ class Search extends Component {
           <MenuItem value={50} primaryText="50" />
         </SelectField>
         <br/>
+        {/* if the length of the images array is greater than 0, then show the ImageResultsComponent with images prop passed, else null */}
+        {this.state.images.length > 0 ? (<ImageResults images={this.state.images}/>) : null}
 
       </div>
     )
