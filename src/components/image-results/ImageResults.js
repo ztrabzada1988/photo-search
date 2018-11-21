@@ -27,7 +27,7 @@ class ImageResults extends Component {
 
     if(images) { // if images coming from Search is not empty
       imageListContent = (
-        <GridList cols={3}>
+        <GridList cols={3} style={{ paddingLeft: '5px', paddingRight: '5px' }}>
           {images.map(img => (
             <GridTile 
                 title={img.tags} // tags is from api result 

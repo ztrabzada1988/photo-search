@@ -11,6 +11,7 @@ class Search extends Component {
         searchText: '',
         amount: 15,
         apiUrl: 'https://pixabay.com/api',
+        apiKey:  process.env.REACT_APP_PIXABAY_API_KEY,
         images: []
     };
 
@@ -36,7 +37,7 @@ class Search extends Component {
     console.log(this.state.images);
     return (
       <div>
-        <TextField 
+        <TextField style={{ paddingLeft: '20px' }}
           name="searchText" // name here needs to match the initial state name up top
           value={this.state.searchText}
           onChange={this.onTextChange}
@@ -45,7 +46,7 @@ class Search extends Component {
         />
         <br/>
 
-        <SelectField
+        <SelectField style={{ paddingLeft: '20px' }}
           name="amount"
           floatingLabelText="Amount"
           value={this.state.amount}
