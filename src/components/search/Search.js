@@ -31,7 +31,7 @@ class Search extends Component {
     };
 
     // this corresponds to the SelectField below
-    onAmountChange = (e, index, value) => this.setState({amount: value});
+    onAmountChange = (value) => this.setState({amount: value});
 
   render() {
     // console.log(this.state.images);
@@ -63,7 +63,7 @@ class Search extends Component {
         {this.state.images.length > 0 ? (<ImageResults images={this.state.images}/>) : null}
 
       </div>
-    )
+    );
   }
 }
 
